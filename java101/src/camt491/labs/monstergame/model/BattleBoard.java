@@ -17,9 +17,7 @@ public class BattleBoard {
 		}
 		
 		//Initialize Monsters
-		
-		
-		
+
 		monsters[0] = new Monster(1000, 20, 1, "Frank");
 		monsters[1] = new Monster(500, 40, 2, "Drac");
 		monsters[2] = new Monster(1000, 20, 1, "Paul");
@@ -111,7 +109,7 @@ public class BattleBoard {
 					int randMoveDistance = (int) (Math.random() * (m.getMovement() + 1));
 
 					// Prints move distance and move direction
-					System.out.println("Monster " + m.nameChar1 + " Moving - distance: "+randMoveDistance + " direction: " + randMoveDirection);
+					System.out.println("Monster " + m.nameChar1 + " Moving - distance: "+ randMoveDistance + " direction: " + randMoveDirection);
 
 					// Erase monsters character on the board by replacing it with a *
 					battleBoard[m.yPosition][m.xPosition] = '*';

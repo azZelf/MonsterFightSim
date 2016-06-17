@@ -54,14 +54,25 @@ public class Monster {
 	// When overloading a method you can't just change the return type
 	// Focus on creating methods that except different parameters
 
-	public void setHealth(int decreaseHealth) {
+	
+	/**
+	 * Explain it here 
+	 * 
+	 * @param decreaseHealth explain the parameter here
+	 * @return explain the return value here
+	 */
+	public void decreaseHealth(int decreaseHealth) {
 		health = health - decreaseHealth;
 		if (health < 0) {
 			alive = false;
 		}
 	}
 
-	public void setHealth(double decreaseHealth) {
+	/**
+	 * 
+	 * @param decreaseHealth
+	 */
+	public void decreaseHealth(double decreaseHealth) {
 		int intDecreaseHealth = (int) decreaseHealth;
 		health = health - intDecreaseHealth;
 		if (health < 0) {
