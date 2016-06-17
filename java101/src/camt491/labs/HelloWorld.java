@@ -1,6 +1,6 @@
 package camt491.labs;
 
-public class Sample {
+public class HelloWorld {
 
 	public static void main(String[] args) {
 		System.out.println("Hello World");
