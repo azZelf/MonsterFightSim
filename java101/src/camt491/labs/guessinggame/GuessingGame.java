@@ -1,4 +1,4 @@
-package com.camt.java.labs.guessinggame;
+package camt491.labs.guessinggame;
 
 import java.util.Scanner;	
 

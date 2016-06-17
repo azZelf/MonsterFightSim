@@ -1,4 +1,4 @@
-package com.camt.java.lessons;
+package camt491.lessons;
 
 public class lesson01 {
 	static String randomString = "String to print";

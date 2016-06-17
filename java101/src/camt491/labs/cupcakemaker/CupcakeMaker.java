@@ -1,4 +1,4 @@
-package com.camt.java.labs.cupcakemaker;
+package camt491.labs.cupcakemaker;
 
 import camt491.CupcakeSupport.CupcakeCherry;
 import camt491.CupcakeSupport.CupcakeFrosting;

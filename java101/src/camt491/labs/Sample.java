@@ -1,4 +1,4 @@
-package com.camt.java.labs;
+package camt491.labs;
 
 public class Sample {
 

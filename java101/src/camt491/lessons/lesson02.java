@@ -1,4 +1,4 @@
-package com.camt.java.lessons;
+package camt491.lessons;
 
 import java.util.Scanner;
 
