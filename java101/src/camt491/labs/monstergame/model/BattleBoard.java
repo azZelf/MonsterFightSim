@@ -1,10 +1,13 @@
 package camt491.labs.monstergame.model;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 import camt491.labs.monstergame.battle.BattleEngine;
 
 public class BattleBoard {
+	
+	Scanner scanner = new Scanner(System.in);
 
 	// Creates a multidimensional array of chars
 	private char[][] battleBoard = new char[10][10];
@@ -20,10 +23,10 @@ public class BattleBoard {
 
 		// Initialize Monsters
 
-		monsters[0] = new Monster(1000, 20, 1, "Frank");
-		monsters[1] = new Monster(500, 40, 2, "Drac");
-		monsters[2] = new Monster(1000, 20, 1, "Paul");
-		monsters[3] = new Monster(1000, 20, 1, "George");
+		monsters[0] = new Monster(5000, 50, 1, "Juggernaught");
+		monsters[1] = new Monster(500, 1000, 4, "Speedy");
+		monsters[2] = new Monster(1000, 10, 1, "Paul");
+		monsters[3] = new Monster(1000, 10, 1, "George");
 
 		for (Monster m : monsters) {
 			// Define the maximum x and y for the battle board
@@ -165,9 +168,16 @@ public class BattleBoard {
 						// this function
 
 						if (onMySpace(monsters[i], m.getxPosition(), m.getyPosition())) {
+							//TODO IF MONSTERS ARE ON THE SAME TEAM, SET TO TRUE!
 							// If a monster tries to move to an occupied space
 							// the monsters will fight!
-							BattleEngine.simulateBattle(m, monsters[i]);
+							System.out.println(m.getName() + " landed on " + monsters[i].getName());
+							if(monsters[i].isAlive()) { //TODO: Remove this for corpse looting.
+								promptEnterKey();
+								BattleEngine.simulateBattle(m, monsters[i]);
+								System.out.println("Interaction is over.");
+								promptEnterKey();
+							}
 							isSpaceOccupied = false;
 							break;
 						} else {
@@ -209,25 +219,35 @@ public class BattleBoard {
 	}
 
 	public boolean gameOver() {
+		Monster victor = null;
 		int aliveMonsters = monsters.length;
 		for (Monster m : this.monsters) {
 			if (!m.isAlive()) {
 				aliveMonsters--;
 			} else {
-				
+				victor = m;
 			}
 			System.out.println("Monster : " + m.getName() + " Alive : " + m.isAlive());
 		}
-		if (aliveMonsters <= 1)
-			return true;
+		if (aliveMonsters <= 1) {
+			System.out.println("THE WINNER IS : " + victor.getName() + "!!!!!!");
+			return true;			
+		}
 		else
 			return false;
 	}
 	
 	public void printMonsterStatus() {
+		System.out.println("----Start Print----");
 		for (Monster m : this.monsters) {
-			
+			m.printStatus();
 		}
+		System.out.println("-----End  Print----");
 	}
+	
+	public void promptEnterKey(){
+		   System.out.println("An Event has occured! Press \"ENTER\" to continue...");
+		   scanner.nextLine();
+		}
 
 }

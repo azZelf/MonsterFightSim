@@ -83,13 +83,22 @@ public class Monster {
 	}
 
 	public void attack(Monster enemy) {
+		System.out.println(this.getName() + " is being attacked by " + enemy.getName());
 		if (enemy.isAlive()) {
 			enemy.decreaseHealth(this.getAttack());
 		}
 		else
 		{
-			System.out.println("Error: Monster cannot attack a corpse, implement a loot method silly!");
+			System.out.println("Error: Monster cannot attack a corpse, implement a loot method!");
 		}
+	}
+	
+	public void printStatus() {
+		System.out.println("\tMonster: " + this.getName() + " (firstChar: " + this.getNameChar1() + ")");
+		System.out.println("\t\tHealth: " + this.getHealth() + " (alive: " + this.isAlive() + ")");
+		System.out.println("\t\tAttack: " + this.getAttack());
+		System.out.println("\t\tPosition(y,x): " + this.getyPosition()+ "," + this.getxPosition());
+		System.out.println("\t\tMovement: " + this.getMovement());
 	}
 
 	public int getHealth() {
