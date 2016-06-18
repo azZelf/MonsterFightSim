@@ -13,12 +13,8 @@ public class Game {
 		do{
 			battleboard.moveMonsters();
 			System.out.println("End turn: " + i);
-			if(i%10 == 0) {
-				battleboard.printMonsterStatus();
-			}
 			i++;
 		}while(!battleboard.gameOver());
-		battleboard.printMonsterStatus();
 	}
 
 }

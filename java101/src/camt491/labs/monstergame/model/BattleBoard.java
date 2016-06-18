@@ -23,10 +23,10 @@ public class BattleBoard {
 
 		// Initialize Monsters
 
-		monsters[0] = new Monster(5000, 50, 1, "Juggernaught");
-		monsters[1] = new Monster(500, 1000, 4, "Speedy");
-		monsters[2] = new Monster(1000, 10, 1, "Paul");
-		monsters[3] = new Monster(1000, 10, 1, "George");
+		monsters[0] = new Monster(4000, 50, 1, "Juggernaught");
+		monsters[1] = new Monster(500, 350, 4, "Speedy");
+		monsters[2] = new Monster(1000, 100, 2, "Paul");
+		monsters[3] = new Monster(1000, 100, 2, "George");
 
 		for (Monster m : monsters) {
 			// Define the maximum x and y for the battle board
@@ -173,10 +173,11 @@ public class BattleBoard {
 							// the monsters will fight!
 							System.out.println(m.getName() + " landed on " + monsters[i].getName());
 							if(monsters[i].isAlive()) { //TODO: Remove this for corpse looting.
-								promptEnterKey();
+								//promptEnterKey();
 								BattleEngine.simulateBattle(m, monsters[i]);
 								System.out.println("Interaction is over.");
-								promptEnterKey();
+								this.printMonsterStatus();
+								//promptEnterKey();
 							}
 							isSpaceOccupied = false;
 							break;
