@@ -216,22 +216,35 @@ public class BattleBoard {
 
 	}
 
-	// Checks if a monster is trying to move into the same x/y position as
-	// another monster
+	/**
+	 * Checks to see if the space is occupied.
+	 * 
+	 * @param otherMon
+	 *            Monster that could potentially be on the desired space
+	 * @param myDesiredXpos
+	 *            Desired x position
+	 * @param myDesiredYpos
+	 *            Desired y position
+	 * @return
+	 */
 	private boolean onMySpace(Monster otherMon, int myDesiredXpos, int myDesiredYpos) {
 		// Checks if the 2 monsters have the same x/y position
 		if ((otherMon.getxPosition()) == (myDesiredXpos) && (otherMon.getyPosition()) == (myDesiredYpos)) {
-			// If they are equal return true so a new x/y position is calculated
-
+			// If they are equal return true
 			return true;
-
 		} else {
-
-			// If false I know the x/y position isn't occupied
+			// If false, the x/y position isn't occupied
 			return false;
 		}
 	}
 
+	/**
+	 * The game is over when only one monster remains. Check all monsters to
+	 * determine the number of alive monsters. If the game is over, print the
+	 * name of the victor.
+	 * 
+	 * @return true if only one monster is alive, otherwise false
+	 */
 	public boolean gameOver() {
 		Monster victor = null;
 		int aliveMonsters = monsters.length;
@@ -250,6 +263,9 @@ public class BattleBoard {
 			return false;
 	}
 
+	/**
+	 * Print the status of all the monsters
+	 */
 	public void printMonsterStatus() {
 		System.out.println("----Start Print----");
 		for (Monster m : this.monsters) {
@@ -258,6 +274,9 @@ public class BattleBoard {
 		System.out.println("-----End  Print----");
 	}
 
+	/**
+	 * Pause execution and allow the user to continue by pressing ENTER.
+	 */
 	public void promptEnterKey() {
 		System.out.println("An Event has occured! Press \"ENTER\" to continue...");
 		scanner.nextLine();
