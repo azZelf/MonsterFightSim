@@ -1,6 +1,7 @@
 package camt491.labs.monstergame;
 
 import camt491.labs.monstergame.model.BattleBoard;
+import camt491.labs.monstergame.model.Monster;
 
 /**
  * This class runs the Monster Battle Simulation!
@@ -16,6 +17,13 @@ public class Game {
 	 */
 	public static void main(String[] args) {
 		BattleBoard battleboard = new BattleBoard();
+		
+		battleboard.addMonster(new Monster(4000, 50, 1, "Juggernaught"));
+		battleboard.addMonster(new Monster(500, 350, 4, "Speedy"));
+		battleboard.addMonster(new Monster(1000, 100, 2, "Paul"));
+		battleboard.addMonster(new Monster(1000, 100, 2, "George"));
+		battleboard.addMonster(new Monster(5555, 55, 5, "Fives"));
+		
 		battleboard.redrawBoard();
 
 		int i = 1;

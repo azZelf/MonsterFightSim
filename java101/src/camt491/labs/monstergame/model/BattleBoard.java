@@ -1,6 +1,8 @@
 package camt491.labs.monstergame.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 import camt491.labs.monstergame.battle.BattleEngine;
@@ -12,7 +14,7 @@ public class BattleBoard {
 	// Creates a multidimensional array of chars
 	private char[][] battleBoard = new char[10][10];
 
-	Monster[] monsters = new Monster[4];
+	List<Monster> monsters = new ArrayList<>();
 
 	/**
 	 * Default constructor, builds the battle board, initializes the monsters,
@@ -24,43 +26,39 @@ public class BattleBoard {
 		for (char[] row : battleBoard) {
 			Arrays.fill(row, '*');
 		}
+	}
+	
+	public void addMonster(Monster m) {
+		//TODO: Check to see if board is full
+		monsters.add(m);
 
-		// Initialize Monsters
+		// Define the maximum x and y for the battle board
+		// It's 1 less because the array index starts at 0
+		int maxXBoardSpace = battleBoard.length - 1;
+		int maxYBoardSpace = battleBoard[0].length - 1;
 
-		monsters[0] = new Monster(4000, 50, 1, "Juggernaught");
-		monsters[1] = new Monster(500, 350, 4, "Speedy");
-		monsters[2] = new Monster(1000, 100, 2, "Paul");
-		monsters[3] = new Monster(1000, 100, 2, "George");
+		// The random starting position for a monster
+		int randNumX, randNumY;
 
-		for (Monster m : monsters) {
-			// Define the maximum x and y for the battle board
-			// It's 1 less because the array index starts at 0
-			int maxXBoardSpace = battleBoard.length - 1;
-			int maxYBoardSpace = battleBoard[0].length - 1;
+		// We use a do loop because we always want to define a start
+		// position for each monster
 
-			// The random starting position for a monster
-			int randNumX, randNumY;
+		do {
+			// Calculate start position based on max board space
+			randNumX = (int) (Math.random() * maxXBoardSpace);
+			randNumY = (int) (Math.random() * maxYBoardSpace);
+		} while (battleBoard[randNumY][randNumX] != '*');
+		// Only allow monster to start on a space with a * on it
 
-			// We use a do loop because we always want to define a start
-			// position for each monster
+		// Assign x and y position to the object that called this method
+		m.setxPosition(randNumX);
+		m.setyPosition(randNumY);
 
-			do {
-				// Calculate start position based on max board space
-				randNumX = (int) (Math.random() * maxXBoardSpace);
-				randNumY = (int) (Math.random() * maxYBoardSpace);
-			} while (battleBoard[randNumY][randNumX] != '*');
-			// Only allow monster to start on a space with a * on it
+		// Assign character in the array based on the first initial
+		// of the monsters name charAt(0) returns first letter of name
 
-			// Assign x and y position to the object that called this method
-			m.setxPosition(randNumX);
-			m.setyPosition(randNumY);
-
-			// Assign character in the array based on the first initial
-			// of the monsters name charAt(0) returns first letter of name
-
-			// Put first character of monster in the array
-			battleBoard[m.getyPosition()][m.getxPosition()] = m.getNameChar1();
-		}
+		// Put first character of monster in the array
+		battleBoard[m.getyPosition()][m.getxPosition()] = m.getNameChar1();
 	}
 
 	/**
@@ -102,7 +100,6 @@ public class BattleBoard {
 
 		for (Monster m : monsters) {
 			if (m.isAlive()) {
-
 				isSpaceOccupied = true;
 
 				// Define the maximum x and y for the battle board
@@ -112,6 +109,8 @@ public class BattleBoard {
 
 				int originalxPosition = m.getxPosition();
 				int originalyPostiion = m.getyPosition();
+				
+				char newBoardValue = m.getNameChar1();
 
 				// while loop used to make sure I don't move a monster
 				// into an occupied space
@@ -162,27 +161,28 @@ public class BattleBoard {
 
 					// monster.length returns the number of items in the array
 					// monster
-					for (int i = 0; i < monsters.length; i++) {
+					for (int i = 0; i < monsters.size(); i++) {
 						// if statement skips checking the same monster position
 						// against
 						// itself
 
-						if (m == monsters[i]) {
+						if (m == monsters.get(i)) {
 							continue;
 						}
 
 						// onMySpace returns true if the desired space is
 						// occupied.
-						if (onMySpace(monsters[i], m.getxPosition(), m.getyPosition())) {
+						if (onMySpace(monsters.get(i), m.getxPosition(), m.getyPosition())) {
 							// If a monster tries to move to an occupied space
 							// the monsters will fight!
-							System.out.println(m.getName() + " landed on " + monsters[i].getName());
-							if (monsters[i].isAlive()) { // TODO: Remove this
+							System.out.println(m.getName() + " landed on " + monsters.get(i).getName());
+							if (monsters.get(i).isAlive()) { // TODO: Remove this
 															// for corpse
 															// looting &
 															// resurrecting
 								// promptEnterKey();
-								BattleEngine.simulateBattle(m, monsters[i]);
+								Monster victor = BattleEngine.simulateBattle(m, monsters.get(i));
+								newBoardValue = victor.getNameChar1();
 								System.out.println("Interaction is over.");
 								this.printMonsterStatus();
 								// promptEnterKey();
@@ -209,7 +209,7 @@ public class BattleBoard {
 				// *
 				battleBoard[originalyPostiion][originalxPosition] = '*';
 				// Set the value in the array to the first letter of the monster
-				battleBoard[m.getyPosition()][m.getxPosition()] = m.getNameChar1();
+				battleBoard[m.getyPosition()][m.getxPosition()] = newBoardValue;
 			}
 		}
 		redrawBoard();
@@ -247,7 +247,7 @@ public class BattleBoard {
 	 */
 	public boolean gameOver() {
 		Monster victor = null;
-		int aliveMonsters = monsters.length;
+		int aliveMonsters = monsters.size();
 		for (Monster m : this.monsters) {
 			if (!m.isAlive()) {
 				aliveMonsters--;

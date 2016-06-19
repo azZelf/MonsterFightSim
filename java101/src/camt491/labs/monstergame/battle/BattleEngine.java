@@ -21,7 +21,7 @@ public class BattleEngine {
 	 * @param m2
 	 *            This monster attacks second.
 	 */
-	public static void simulateBattle(Monster m1, Monster m2) {
+	public static Monster simulateBattle(Monster m1, Monster m2) {
 
 		// TODO: If loot is implemented, check if monster is dead, then loot
 		// items instead of battle.
@@ -39,6 +39,7 @@ public class BattleEngine {
 			}
 
 		} while (m1.isAlive() && m2.isAlive());
+		return m1.isAlive() ? m1 : m2;
 	}
 
 }
