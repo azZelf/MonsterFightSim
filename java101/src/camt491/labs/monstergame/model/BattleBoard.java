@@ -6,7 +6,7 @@ import java.util.Scanner;
 import camt491.labs.monstergame.battle.BattleEngine;
 
 public class BattleBoard {
-	
+
 	Scanner scanner = new Scanner(System.in);
 
 	// Creates a multidimensional array of chars
@@ -14,6 +14,10 @@ public class BattleBoard {
 
 	Monster[] monsters = new Monster[4];
 
+	/**
+	 * Default constructor, builds the battle board, initializes the monsters,
+	 * and places the monsters on the battle board.
+	 */
 	public BattleBoard() {
 
 		// Build battleBoard
@@ -59,7 +63,9 @@ public class BattleBoard {
 		}
 	}
 
-	// Redraws the board
+	/**
+	 * Redraws the battle board, printing it to the screen.
+	 */
 	public void redrawBoard() {
 
 		int k = 1;
@@ -84,6 +90,11 @@ public class BattleBoard {
 		System.out.println();
 	}
 
+	/**
+	 * Moves all the monsters in a random direction based on their "movement"
+	 * stat. If a monster lands on another monster, they enter a battle.
+	 * Monsters cannot move off the board, and will stop at the edges.
+	 */
 	public void moveMonsters() {
 		// isSpaceOpen will be used to track whether the space the
 		// monster plans to move into is occupied
@@ -160,26 +171,28 @@ public class BattleBoard {
 							continue;
 						}
 
-						// onMySpace receives the monster array, index for the
-						// object
-						// I'm
-						// checking currently, and the index for the monster
-						// sent to
-						// this function
-
+						// onMySpace returns true if the desired space is
+						// occupied.
 						if (onMySpace(monsters[i], m.getxPosition(), m.getyPosition())) {
-							//TODO IF MONSTERS ARE ON THE SAME TEAM, SET TO TRUE!
 							// If a monster tries to move to an occupied space
 							// the monsters will fight!
 							System.out.println(m.getName() + " landed on " + monsters[i].getName());
-							if(monsters[i].isAlive()) { //TODO: Remove this for corpse looting.
-								//promptEnterKey();
+							if (monsters[i].isAlive()) { // TODO: Remove this
+															// for corpse
+															// looting &
+															// resurrecting
+								// promptEnterKey();
 								BattleEngine.simulateBattle(m, monsters[i]);
 								System.out.println("Interaction is over.");
 								this.printMonsterStatus();
-								//promptEnterKey();
+								// promptEnterKey();
 							}
-							isSpaceOccupied = false;
+							isSpaceOccupied = false; // TODO: Set to true if the
+														// monster cannot land
+														// on the space, reset
+														// position to original
+														// position before
+														// continuing
 							break;
 						} else {
 							// There was no monster in the space so end the
@@ -232,12 +245,11 @@ public class BattleBoard {
 		}
 		if (aliveMonsters <= 1) {
 			System.out.println("THE WINNER IS : " + victor.getName() + "!!!!!!");
-			return true;			
-		}
-		else
+			return true;
+		} else
 			return false;
 	}
-	
+
 	public void printMonsterStatus() {
 		System.out.println("----Start Print----");
 		for (Monster m : this.monsters) {
@@ -245,10 +257,10 @@ public class BattleBoard {
 		}
 		System.out.println("-----End  Print----");
 	}
-	
-	public void promptEnterKey(){
-		   System.out.println("An Event has occured! Press \"ENTER\" to continue...");
-		   scanner.nextLine();
-		}
+
+	public void promptEnterKey() {
+		System.out.println("An Event has occured! Press \"ENTER\" to continue...");
+		scanner.nextLine();
+	}
 
 }

@@ -1,29 +1,27 @@
 package camt491.labs.monstergame.model;
 
+/**
+ * This Class represents a Monster.
+ */
 public class Monster {
 
 	// Class Variables or Fields
-	// You declare constants with final
-
-	public final String TOMBSTONE = "Here Lies a Dead monster";
 
 	// private fields are not visible outside of the class
+	private String name;
+	private char nameChar1;
 	private int health;
 	private int attack;
-	private int movement;
+	private int movement; 	//How far a monster can move on the board.
+	private int xPosition; 
+	private int yPosition;
 
 	// Monitors whether the monster is alive or dead
 	private boolean alive;
 
-	// public variables are visible outside of the class
-	// You should have as few as possible public fields
-	private String name;
-	private int xPosition;
-	private int yPosition;
-	private char nameChar1;
-
 	// Class Methods
-	// Accessor Methods are used to get and set the values of private fields
+	// Accessor Methods (getters and setters) are used to get and set the values
+	// of private fields
 
 	public Monster() {
 		this.alive = true;
@@ -32,31 +30,27 @@ public class Monster {
 	}
 
 	public Monster(int health, int attack, int movement, String name) {
+		this(); // Calls default constructor
+
 		this.health = health;
 		this.attack = attack;
 		this.movement = movement;
 		this.name = name;
-		if (name != null) {
+		if (this.name != null && !this.name.isEmpty()) {
 			this.nameChar1 = name.charAt(0);
+		} else {
+			System.out.println("ERROR: Monster name must not be null or empty.");
 		}
-
-		this.alive = true;
-		this.xPosition = 0;
-		this.yPosition = 0;
 
 	}
 
-	// You can create multiple versions using the same method name
-	// Now setHealth can except an attack that contains decimals
-	// When overloading a method you can't just change the return type
-	// Focus on creating methods that except different parameters
-
 	/**
-	 * Explain it here
+	 * Decrease the current health of a monster. If the monster's health is less
+	 * than or equal to zero, the monster is dead, so the monster's alive state
+	 * to false
 	 * 
 	 * @param decreaseHealth
-	 *            explain the parameter here
-	 * @return explain the return value here
+	 *            The amount of health to decrease current health by.
 	 */
 	public void decreaseHealth(int decreaseHealth) {
 		System.out.println("Monster: " + this.getName() + " Health: " + this.getHealth() + " is being attacked by "
@@ -65,39 +59,34 @@ public class Monster {
 		System.out.println("Monster: " + this.getName() + " new Health: " + this.getHealth());
 		if (this.getHealth() <= 0) {
 			this.setAlive(false);
-			System.out.println("Monster: " + this.getName() + " died!");
-			
+			System.out.println("Monster: " + this.getName() + " is dead!");
 		}
 	}
 
 	/**
+	 * Attack an enemey monster. Enemy monster will lose health equal to this
+	 * monster's attack.
 	 * 
-	 * @param decreaseHealth
+	 * @param enemy
+	 *            The monster being attacked by this monster.
 	 */
-	public void decreaseHealth(double decreaseHealth) {
-		int intDecreaseHealth = (int) decreaseHealth;
-		health = health - intDecreaseHealth;
-		if (health < 0) {
-			alive = false;
-		}
-	}
-
 	public void attack(Monster enemy) {
 		System.out.println(this.getName() + " is being attacked by " + enemy.getName());
 		if (enemy.isAlive()) {
 			enemy.decreaseHealth(this.getAttack());
-		}
-		else
-		{
+		} else {
 			System.out.println("Error: Monster cannot attack a corpse, implement a loot method!");
 		}
 	}
-	
+
+	/**
+	 * Print the Monster's stats to the screen.
+	 */
 	public void printStatus() {
 		System.out.println("\tMonster: " + this.getName() + " (firstChar: " + this.getNameChar1() + ")");
 		System.out.println("\t\tHealth: " + this.getHealth() + " (alive: " + this.isAlive() + ")");
 		System.out.println("\t\tAttack: " + this.getAttack());
-		System.out.println("\t\tPosition(y,x): " + this.getyPosition()+ "," + this.getxPosition());
+		System.out.println("\t\tPosition(y,x): " + this.getyPosition() + "," + this.getxPosition());
 		System.out.println("\t\tMovement: " + this.getMovement());
 	}
 
