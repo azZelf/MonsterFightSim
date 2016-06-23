@@ -1,9 +1,14 @@
-package camt491.labs.monstergame.model;
+package camt491.labs.monstergame.model.player.impl;
+
+import camt491.labs.monstergame.model.item.Consumable;
+import camt491.labs.monstergame.model.item.impl.HealthPotion;
+import camt491.labs.monstergame.model.player.Attackable;
+import camt491.labs.monstergame.model.player.Lootable;
 
 /**
  * This Class represents a Monster.
  */
-public class Monster {
+public class Monster implements Lootable, Attackable {
 
 	// Class Variables or Fields
 
@@ -12,8 +17,8 @@ public class Monster {
 	private char nameChar1;
 	private int health;
 	private int attack;
-	private int movement; 	//How far a monster can move on the board.
-	private int xPosition; 
+	private int movement; // How far a monster can move on the board.
+	private int xPosition;
 	private int yPosition;
 
 	// Monitors whether the monster is alive or dead
@@ -64,13 +69,26 @@ public class Monster {
 	}
 
 	/**
+	 * Increase the current health of a monster.
+	 * 
+	 * @param increaseHealth
+	 *            The amount of health to increase current health by.
+	 */
+	public void increaseHealth(int increaseHealth) {
+		System.out.println("Monster: " + this.getName() + " Health: " + this.getHealth() + " is being increased by "
+				+ increaseHealth + "!");
+		this.setHealth(this.getHealth() + increaseHealth);
+		System.out.println("Monster: " + this.getName() + " new Health: " + this.getHealth());
+	}
+
+	/**
 	 * Attack an enemey monster. Enemy monster will lose health equal to this
 	 * monster's attack.
 	 * 
 	 * @param enemy
 	 *            The monster being attacked by this monster.
 	 */
-	public void attack(Monster enemy) {
+	public void attack(Attackable enemy) {
 		System.out.println(this.getName() + " is being attacked by " + enemy.getName());
 		if (enemy.isAlive()) {
 			enemy.decreaseHealth(this.getAttack());
@@ -88,6 +106,12 @@ public class Monster {
 		System.out.println("\t\tAttack: " + this.getAttack());
 		System.out.println("\t\tPosition(y,x): " + this.getyPosition() + "," + this.getxPosition());
 		System.out.println("\t\tMovement: " + this.getMovement());
+	}
+
+	public void consume(Consumable c) {
+		System.out.println("Monster : " + getName() + " is consuming HealthPotion of value : " + c.getValue());
+		c.modifyAttackable(this);
+		c.setEmpty(true);
 	}
 
 	public int getHealth() {

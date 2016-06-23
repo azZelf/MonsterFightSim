@@ -5,7 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import camt491.labs.monstergame.battle.BattleEngine;
+import camt491.labs.monstergame.interaction.InteractionEngine;
+import camt491.labs.monstergame.model.item.Consumable;
+import camt491.labs.monstergame.model.player.impl.Monster;
+import camt491.labs.monstergame.util.MonsterUtil;
 
 public class BattleBoard {
 
@@ -15,6 +18,7 @@ public class BattleBoard {
 	private char[][] battleBoard = new char[10][10];
 
 	List<Monster> monsters = new ArrayList<>();
+	List<Consumable> consumables = new ArrayList<>();
 
 	/**
 	 * Default constructor, builds the battle board, initializes the monsters,
@@ -27,11 +31,23 @@ public class BattleBoard {
 			Arrays.fill(row, '*');
 		}
 	}
-	
-	public void addMonster(Monster m) {
-		//TODO: Check to see if board is full
-		monsters.add(m);
 
+	public void addMonster(Monster m) {
+		// TODO: EXTRA CREDIT Check to see if board is full
+		monsters.add(m);
+		addInteractableToBoard(m);
+
+	}
+	
+	public void addConsumable(Consumable c) {
+		// TODO: EXTRA CREDIT Check to see if board is full
+		consumables.add(c);
+		addInteractableToBoard(c);
+	}
+	
+
+	private void addInteractableToBoard(Interactable i) {
+		// TODO: EXTRA CREDIT Check to see if board is full
 		// Define the maximum x and y for the battle board
 		// It's 1 less because the array index starts at 0
 		int maxXBoardSpace = battleBoard.length - 1;
@@ -51,14 +67,14 @@ public class BattleBoard {
 		// Only allow monster to start on a space with a * on it
 
 		// Assign x and y position to the object that called this method
-		m.setxPosition(randNumX);
-		m.setyPosition(randNumY);
+		i.setxPosition(randNumX);
+		i.setyPosition(randNumY);
 
 		// Assign character in the array based on the first initial
 		// of the monsters name charAt(0) returns first letter of name
 
 		// Put first character of monster in the array
-		battleBoard[m.getyPosition()][m.getxPosition()] = m.getNameChar1();
+		battleBoard[i.getyPosition()][i.getxPosition()] = i.getNameChar1();
 	}
 
 	/**
@@ -109,7 +125,7 @@ public class BattleBoard {
 
 				int originalxPosition = m.getxPosition();
 				int originalyPostiion = m.getyPosition();
-				
+
 				char newBoardValue = m.getNameChar1();
 
 				// while loop used to make sure I don't move a monster
@@ -139,19 +155,19 @@ public class BattleBoard {
 						} else {
 							m.setyPosition(m.getyPosition() - randMoveDistance);
 						}
-					} else if (randMoveDirection == 1) {
+					} else if (randMoveDirection == 1) { //
 						if ((m.getxPosition() + randMoveDistance) > maxXBoardSpace) {
 							m.setyPosition(maxXBoardSpace);
 						} else {
 							m.setxPosition(m.getxPosition() + randMoveDistance);
 						}
-					} else if (randMoveDirection == 2) {
+					} else if (randMoveDirection == 2) { //
 						if ((m.getyPosition() + randMoveDistance) > maxYBoardSpace) {
 							m.setyPosition(maxYBoardSpace);
 						} else {
 							m.setyPosition(m.getyPosition() + randMoveDistance);
 						}
-					} else {
+					} else { // Left
 						if ((m.getxPosition() - randMoveDistance) < 0) {
 							m.setxPosition(0);
 						} else {
@@ -159,33 +175,32 @@ public class BattleBoard {
 						}
 					}
 
-					// monster.length returns the number of items in the array
-					// monster
-					for (int i = 0; i < monsters.size(); i++) {
+					
+					for (Monster m2 : monsters) {
 						// if statement skips checking the same monster position
 						// against
 						// itself
 
-						if (m == monsters.get(i)) {
+						if (m == m2) {
 							continue;
 						}
 
 						// onMySpace returns true if the desired space is
 						// occupied.
-						if (onMySpace(monsters.get(i), m.getxPosition(), m.getyPosition())) {
+						if (onMySpace(m2, m.getxPosition(), m.getyPosition())) {
 							// If a monster tries to move to an occupied space
 							// the monsters will fight!
-							System.out.println(m.getName() + " landed on " + monsters.get(i).getName());
-							if (monsters.get(i).isAlive()) { // TODO: Remove this
-															// for corpse
-															// looting &
-															// resurrecting
-								// promptEnterKey();
-								Monster victor = BattleEngine.simulateBattle(m, monsters.get(i));
-								newBoardValue = victor.getNameChar1();
+							System.out.println(m.getName() + " landed on " + m2.getName());
+							if (m2.isAlive()) { // TODO: Remove
+																// this
+																// for corpse
+																// looting &
+																// resurrecting
+								// MonsterUtil.promptEnterKey();
+								newBoardValue = InteractionEngine.attack(m, m2).getNameChar1();
 								System.out.println("Interaction is over.");
 								this.printMonsterStatus();
-								// promptEnterKey();
+								// MonsterUtil.promptEnterKey();
 							}
 							isSpaceOccupied = false; // TODO: Set to true if the
 														// monster cannot land
@@ -202,6 +217,25 @@ public class BattleBoard {
 						}
 
 					}
+					
+					for(Consumable c : consumables) {
+						if(!c.isEmpty()) {
+							if (onMySpace(c, m.getxPosition(), m.getyPosition())) {
+								// If a monster tries to move to an occupied space
+								// the monsters will fight!
+								System.out.println(m.getName() + " landed on " + c.getName());
+								MonsterUtil.promptEnterKey();
+								m.consume(c);
+								newBoardValue = m.getNameChar1();
+								System.out.println("Interaction is over.");
+								this.printMonsterStatus();
+								MonsterUtil.promptEnterKey();
+								break;
+							}
+						}
+					}
+					//TODO: Not using right now
+					isSpaceOccupied = false;
 
 				} // End of while loop
 
@@ -227,9 +261,9 @@ public class BattleBoard {
 	 *            Desired y position
 	 * @return
 	 */
-	private boolean onMySpace(Monster otherMon, int myDesiredXpos, int myDesiredYpos) {
+	private boolean onMySpace(Interactable otherThing, int myDesiredXpos, int myDesiredYpos) {
 		// Checks if the 2 monsters have the same x/y position
-		if ((otherMon.getxPosition()) == (myDesiredXpos) && (otherMon.getyPosition()) == (myDesiredYpos)) {
+		if ((otherThing.getxPosition()) == (myDesiredXpos) && (otherThing.getyPosition()) == (myDesiredYpos)) {
 			// If they are equal return true
 			return true;
 		} else {

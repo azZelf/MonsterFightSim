@@ -1,7 +1,8 @@
 package camt491.labs.monstergame;
 
 import camt491.labs.monstergame.model.BattleBoard;
-import camt491.labs.monstergame.model.Monster;
+import camt491.labs.monstergame.model.item.impl.HealthPotion;
+import camt491.labs.monstergame.model.player.impl.Monster;
 
 /**
  * This class runs the Monster Battle Simulation!
@@ -23,6 +24,8 @@ public class Game {
 		battleboard.addMonster(new Monster(1000, 100, 2, "Paul"));
 		battleboard.addMonster(new Monster(1000, 100, 2, "George"));
 		battleboard.addMonster(new Monster(5555, 55, 5, "Fives"));
+		
+		battleboard.addConsumable(new HealthPotion(1000, "$HealthPotion"));
 		
 		battleboard.redrawBoard();
 
