@@ -1,4 +1,4 @@
-package camt491.labs.monstergame.old;
+package labs.monster.old;
 
 import java.util.Arrays;
 

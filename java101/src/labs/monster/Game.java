@@ -1,8 +1,8 @@
-package camt491.labs.monstergame;
+package labs.monster;
 
-import camt491.labs.monstergame.model.BattleBoard;
-import camt491.labs.monstergame.model.item.impl.HealthPotion;
-import camt491.labs.monstergame.model.player.impl.Monster;
+import labs.monster.model.BattleBoard;
+import labs.monster.model.item.impl.HealthPotion;
+import labs.monster.model.player.impl.Monster;
 
 /**
  * This class runs the Monster Battle Simulation!

@@ -1,4 +1,4 @@
-package camt491.labs.monstergame.old;
+package labs.monster.old;
 
 import org.apache.commons.lang3.ArrayUtils;
 // Basic class definition

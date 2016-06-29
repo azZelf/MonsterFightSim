@@ -1,7 +1,7 @@
-package camt491.labs.monstergame.model.item;
+package labs.monster.model.item;
 
-import camt491.labs.monstergame.model.Interactable;
-import camt491.labs.monstergame.model.player.Attackable;
+import labs.monster.model.Interactable;
+import labs.monster.model.player.Attackable;
 
 public interface Consumable extends Interactable {
 	

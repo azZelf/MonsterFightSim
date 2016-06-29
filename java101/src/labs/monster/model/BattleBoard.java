@@ -1,14 +1,14 @@
-package camt491.labs.monstergame.model;
+package labs.monster.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import camt491.labs.monstergame.interaction.InteractionEngine;
-import camt491.labs.monstergame.model.item.Consumable;
-import camt491.labs.monstergame.model.player.impl.Monster;
-import camt491.labs.monstergame.util.MonsterUtil;
+import labs.monster.interaction.InteractionEngine;
+import labs.monster.model.item.Consumable;
+import labs.monster.model.player.impl.Monster;
+import labs.monster.util.MonsterUtil;
 
 public class BattleBoard {
 

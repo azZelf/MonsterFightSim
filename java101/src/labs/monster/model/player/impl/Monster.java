@@ -1,9 +1,9 @@
-package camt491.labs.monstergame.model.player.impl;
+package labs.monster.model.player.impl;
 
-import camt491.labs.monstergame.model.item.Consumable;
-import camt491.labs.monstergame.model.item.impl.HealthPotion;
-import camt491.labs.monstergame.model.player.Attackable;
-import camt491.labs.monstergame.model.player.Lootable;
+import labs.monster.model.item.Consumable;
+import labs.monster.model.item.impl.HealthPotion;
+import labs.monster.model.player.Attackable;
+import labs.monster.model.player.Lootable;
 
 /**
  * This Class represents a Monster.

@@ -1,6 +1,6 @@
-package camt491.labs.monstergame.model.item.impl;
+package labs.monster.model.item.impl;
 
-import camt491.labs.monstergame.model.player.Attackable;
+import labs.monster.model.player.Attackable;
 
 public class HealthPotion extends Potion {
 	

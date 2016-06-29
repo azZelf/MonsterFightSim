@@ -1,4 +1,4 @@
-package camt491.labs.monstergame.model;
+package labs.monster.model;
 
 public interface Interactable {
 	

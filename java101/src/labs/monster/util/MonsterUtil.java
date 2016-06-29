@@ -1,4 +1,4 @@
-package camt491.labs.monstergame.util;
+package labs.monster.util;
 
 import java.util.Scanner;
 

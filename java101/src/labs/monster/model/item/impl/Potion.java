@@ -1,8 +1,8 @@
-package camt491.labs.monstergame.model.item.impl;
+package labs.monster.model.item.impl;
 
-import camt491.labs.monstergame.model.Interactable;
-import camt491.labs.monstergame.model.item.Consumable;
-import camt491.labs.monstergame.model.player.Attackable;
+import labs.monster.model.Interactable;
+import labs.monster.model.item.Consumable;
+import labs.monster.model.player.Attackable;
 
 public abstract class Potion implements Interactable, Consumable {
 
@@ -19,6 +19,7 @@ public abstract class Potion implements Interactable, Consumable {
 	private int yPostition;
 
 	public Potion() {
+		//TODO: Extend Entity Class to set name and x and y position for all monsters and items then extend
 		this.value = 0;
 		this.xPosition = 0;
 		this.yPostition = 0;

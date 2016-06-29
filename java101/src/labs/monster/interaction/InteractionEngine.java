@@ -1,7 +1,6 @@
-package camt491.labs.monstergame.interaction;
+package labs.monster.interaction;
 
-import camt491.labs.monstergame.model.item.Consumable;
-import camt491.labs.monstergame.model.player.Attackable;
+import labs.monster.model.player.Attackable;
 
 public class InteractionEngine {
 
